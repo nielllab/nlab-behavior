@@ -1,0 +1,67 @@
+function details = doStopping(stopImg,framerate, subj,win)
+
+%%% set flags
+t= 0;       %%% current frame
+stopped =0;  %%% stopped yet?
+done=0;      %%% finished stop period
+
+%%% center position for optical mosue
+xcenter = 1920/2; ycenter = 1080/2;
+
+start = GetSecs
+duration = subj.stopDuration*framerate;
+
+
+
+
+while ~done
+    t=t+1;
+   
+       %%% read and reset mouse
+    [x y] = GetMouse;
+    SetMouse(xcenter,ycenter);
+    details.dx(t) = x-xcenter;
+    details.dy(t)=y-ycenter;
+    d(t) = sqrt(details.dx(t)^2 + details.dy(t)^2);
+    
+    %%% set up screen with stopping image (dependent on movement
+    tex=Screen('MakeTexture', win, stopImg);
+    Screen('DrawTexture', win, tex);
+    if d(t)<subj.stopThresh
+        Screen('DrawText',win,sprintf('stop'),10,30);
+    else
+        Screen('DrawText',win,sprintf('move'),10,30);
+    end
+    Screen('Flip',win);
+ 
+    %%% check whether the last "duration" frames were less than threshold
+    if ~stopped&& t>subj.stopDuration*framerate && max(sqrt(details.dx(end-duration:end).^2 + details.dy(end-duration:end).^2))<subj.stopThresh
+        stopped=1;
+        stopTime=t;
+    end
+    
+    %%% if no stopReward, we're done
+    %%% otherwise, open valve and then wait to close it
+    if stopped&~subj.stopReward
+        done=1;
+    elseif stopped&subj.stopReward&stopTime==t;
+        io64(ioObj,valveAddr,255);
+        display('opened valve')
+        t
+    elseif stopped & subj.stopReward&t>stopTime+(subj.stopReward)*framerate
+        io64(ioObj,valveAddr,0);
+        display('closed valve')
+        t
+        done=1;
+    end
+        c=keyboardCommand(win);
+    if strcmp(c,'q')
+        details.quit=1;
+        return
+    end
+end
+
+details.stopTime= stopTime/framerate;
+details.stopSecs = GetSecs-start;
+details.quit = 0;
+
