@@ -33,6 +33,7 @@ while ~done
         responded =1;
         respFrame= t;
         details.respTime = GetSecs-start;
+        details.response = sign(details.xpos(t));
         %%% correct response
         if stimDetails.correctResp*sign(details.xpos(t))==1
             details.correct=1;
