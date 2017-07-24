@@ -1,4 +1,4 @@
-function details = doStimPeriod(stimulus,stimDetails,framerate,subj,win)
+function details = doStimPeriod(stimulus,stimDetails,framerate,subj,win,pp, label)
 
 %%% get time and set flags
 start= GetSecs;
@@ -11,8 +11,9 @@ while ~done
     if stimDetails.static ==1
         %%% display stimulus image
         tex=Screen('MakeTexture', win, stimulus); Screen('DrawTexture', win, tex);
+        Screen('DrawText',win,label,10,30);
         vbl = Screen('Flip', win);
-        
+        Screen('Close',tex)
     elseif stimDetails.static==0
         %%% wait and display next frame
     end
@@ -32,26 +33,28 @@ while ~done
     if abs(details.xpos(t))>subj.respThresh
         responded =1;
         respFrame= t;
+        details.timeout=1;
         details.respTime = GetSecs-start;
         details.response = sign(details.xpos(t));
         %%% correct response
         if stimDetails.correctResp*sign(details.xpos(t))==1
             details.correct=1;
-            io64(ioObj,valveAddr,255);
+            setPP(pp,255);
+            openTime = GetSecs;
         else
             details.correct=0;
         end
         done=1;
     end
     %%% check for timeout
-    if t>(subj.maxStimduration)*framerate
+    if GetSecs-start>subj.maxStimduration
         done=1;
         details.correct=0;
         details.timeout=1;
         respFrame=t;
     end
     
-    c=keyboardCommand(win);
+    c=keyboardCommand(win,pp);
     if strcmp(c,'q')
         details.quit=1;
         return
@@ -69,21 +72,25 @@ while ~done
     if details.correct
         %%% show correct image
         tex=Screen('MakeTexture', win, stimulus); Screen('DrawTexture', win, tex);
-        Screen('DrawText',win,sprintf('correct'),10,30);
+        Screen('DrawText',win,label,10,30);
         %%% close valve?
-        if t-respFrame>=(subj.rewardDuration)*framerate
-          io64(ioObj,valveAddr,0);
+        if GetSecs-openTime>=subj.rewardDuration
+            setPP(pp,0);
         end
         %%% when finished
         if t-respFrame>(subj.correctDuration)*framerate
             done=1;
         end
         
+        
+        Screen('Close',tex);
+        
         %%% incorrect response
     elseif ~details.correct
         %%% show error image
         Screen('FillRect',win,255);
-        Screen('DrawText',win,sprintf('incorrect'),10,30);
+        Screen('DrawText',win,label,10,30);
+        Screen('Flip',win);
         %%% when finished
         if t-respFrame>(subj.errorDuration)*framerate
             Screen('FillRect',win,128);
@@ -91,7 +98,6 @@ while ~done
         end
     end
     
-    Screen('Flip',win);
     
     %%% keep recording mouse position
     details.frameT(t) = GetSecs-start;
@@ -100,9 +106,10 @@ while ~done
     details.xpos(t) = details.xpos(t-1)+x-xcenter;
     details.ypos(t) = details.ypos(t-1)+y-ycenter;
     
-    c=keyboardCommand(win);
+    c=keyboardCommand(win,pp);
     if strcmp(c,'q')
         details.quit=1;
+        setPP(pp,0);
         return
     end
     

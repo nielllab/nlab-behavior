@@ -1,22 +1,23 @@
+
 %%% subject information
-subj.name = 'g62b7lt';
-subj.dataLocation = 'c:\balldata\g62b7lt\';
-subj.taskFile = 'HvVtask';
+subj.name = 'G62SS4LT';
+subj.dataLocation = 'c:\balldata\G62SS4LT\';
+subj.taskFile = 'HvV_center_vert_task';
 
 %%% stopping
 subj.stopDuration=1;
-subj.stopThresh=100;
-subj.stopReward=0.15; %%% duration
+subj.stopThresh=60;
+subj.stopReward=0; %%% duration
 
 %%% response
-subj.respThresh = 300;
-subj.maxStimduration = 10;
-subj.rewardDuration=0.15;
+subj.respThresh = 600;
+subj.maxStimduration = 10000;  %%%% timeout
+subj.rewardDuration=0.091;
 
 %%% post-response
-subj.correctDuration = 0.5;
-subj.errorDuration = 0.5;
-subj.correctionProb = 0.25;  %%% probability of correction trial after error
+subj.correctDuration = 1;
+subj.errorDuration = 1;
+subj.correctionProb = 0.5;  %%% probability of correction trial after error
 
 
 
@@ -28,9 +29,10 @@ if ~isdir(subj.dataLocation)
 end
 
 %%% update subject data file (if it exists) or create
-subj.subjFile = [subj.dataLocation subj.name '_subj'];
+subj.subjFile = [subj.dataLocation subj.name '_subj.mat'];
 if exist(subj.subjFile,'file')
-    load(subj.subjFile);
+   display('exists')
+   load(subj.subjFile);
     sessions = sessions+1;
     subjData{sessions} = subj;
     save(subj.subjFile,'sessions','subjData','-append');
