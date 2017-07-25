@@ -10,7 +10,7 @@ while ~done
     t=t+1
     if stimDetails.static ==1
         %%% display stimulus image
-        tex=Screen('MakeTexture', win, stimulus); Screen('DrawTexture', win, tex);
+        tex=Screen('MakeTexture', win, stimulus'); Screen('DrawTexture', win, tex);
         Screen('DrawText',win,label,10,30);
         vbl = Screen('Flip', win);
         Screen('Close',tex)
@@ -71,7 +71,7 @@ while ~done
     %%% correct response
     if details.correct
         %%% show correct image
-        tex=Screen('MakeTexture', win, stimulus); Screen('DrawTexture', win, tex);
+        tex=Screen('MakeTexture', win, stimulus'); Screen('DrawTexture', win, tex);
         Screen('DrawText',win,label,10,30);
         %%% close valve?
         if GetSecs-openTime>=subj.rewardDuration

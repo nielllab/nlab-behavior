@@ -2,7 +2,7 @@
 %%% subject information
 subj.name = 'thedude';
 subj.dataLocation = 'c:\balldata\thedude\';
-subj.taskFile = 'HvVtask';
+subj.taskFile = 'BasicFlankerTask';
 
 %%% stopping
 subj.stopDuration=1;
@@ -11,7 +11,7 @@ subj.stopReward=0; %%% duration
 
 %%% response
 subj.respThresh = 600;
-subj.maxStimduration = 10;  %%%% timeout
+subj.maxStimduration = 10000;  %%%% timeout
 subj.rewardDuration=0.055;
 
 %%% post-response
