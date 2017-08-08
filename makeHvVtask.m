@@ -51,9 +51,9 @@ for n= 1:length(thetarange);
     end
 end
 
-%%% set correct responses
+%%% set correct responses 1=left -1=right in landscape
 correctResp(theta==0) = -1;
-correctResp(theta == pi/2) =1;
+correctResp(theta == pi/2) = 1;
 
 %%% make circular mask
 [x y] =meshgrid(1:blockwidth,1:blockwidth);
@@ -95,6 +95,6 @@ end
 
 
 interImg = ones(xsz,ysz)*128;
-save HvVtask interImg stimulus stimDetails xpos ypos correctResp sf phase theta nx ny
+save HvV_center_task_vert interImg stimulus stimDetails xpos ypos correctResp sf phase theta nx ny
 
 

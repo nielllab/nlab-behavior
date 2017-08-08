@@ -45,7 +45,11 @@ while ~done
     else
         correct = field2array(allResp,'correct');
         bias = field2array(allResp,'response')>0;
-        label = sprintf('  N= %d c = %0.2f b = %0.2f',trial,mean(correct), mean(bias));
+        if trial>50
+            running = mean(correct(end-49:end));
+            else running = NaN;
+        end
+        label = sprintf('  N= %d c = %0.2f cr = %0.2f b = %0.2f',trial,mean(correct), running,mean(bias));
     end
     
     %%% do stopping period
@@ -63,8 +67,9 @@ while ~done
     end
     allResp(trial) = respDetails;
     
-    save(sessionfile,'allStop', 'allResp','-append');
+    save(sessionfile,'allStop', 'allResp','trialCond','-append');
 end
+trialCond = trialCond(1:length(allResp)); allStop = allStop(1:length(allResp)); %%% trim cond/stop in case didn't finish trial
 ListenChar(1);
 Priority(0);
 Screen('CloseAll');
@@ -82,9 +87,29 @@ plot(conv(correct, ones(1,10),'valid')/10,'g'); hold on
 plot(conv(double(bias), ones(1,10),'valid')/10,'r'); legend('correct','bias'); ylim([0 1])
 
 subplot(2,2,3);
-plot(field2array(allStop,'stopSecs')); title('stop time')
+plot(log10(field2array(allStop,'stopSecs')),'.'); title('stop time')
 
 subplot(2,2,4);
 r= field2array(allResp,'respTime');
-plot(r); title('response time'); ylim([0 1.1*max(r)])
+plot(log10(r),'.'); title('response time'); ylim([-1 1.1*max(log10(r))])
 saveas(gcf,[sessionfile '_fig'],'jpg')
+
+clear label
+if isfield(stimDetails,'flankContrast')
+    figure
+    flankC = field2array(stimDetails(trialCond),'flankContrast');
+    c = unique(flankC);
+    for i = 1: length(c)
+       label{i} = num2str(c(i));
+       use = flankC==c(i);       
+      [mn ci] = binofit( sum(correct(use)),sum(use));
+      flankResp(i) = mn; respLower(i) = mn-ci(1); respUpper(i) = ci(2)-mn;
+         [mn ci] = binofit(sum(bias(use)),sum(use));
+      flankBias(i) = mn; biasLower(i) = mn-ci(1); biasUpper(i) = ci(2)-mn;
+    end
+    figure
+     errorbar((1:length(c))+0.1,flankBias,biasLower,biasUpper,'r-o');hold on; 
+    errorbar((1:length(c))-0.1,flankResp,respLower,respUpper,'b-o'); ylim([0 1])
+    set(gca,'Xtick',1:length(c));set(gca,'XTickLabel',label); xlabel('contrast')
+end
+

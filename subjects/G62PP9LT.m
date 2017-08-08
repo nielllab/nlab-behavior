@@ -1,7 +1,7 @@
 
 %%% subject information
-subj.name = 'thedude';
-subj.dataLocation = 'c:\balldata\thedude\';
+subj.name = 'G62PP9LT';
+subj.dataLocation = 'c:\balldata\G62PP9LTT\';
 subj.taskFile = 'BasicFlankerTask';
 
 %%% stopping
@@ -12,12 +12,12 @@ subj.stopReward=0; %%% duration
 %%% response
 subj.respThresh = 600;
 subj.maxStimduration = 10000;  %%%% timeout
-subj.rewardDuration=0.055;
+subj.rewardDuration=0.091;
 
 %%% post-response
 subj.correctDuration = 1;
 subj.errorDuration = 1;
-subj.correctionProb = 1;  %%% probability of correction trial after error
+subj.correctionProb = 0.5;  %%% probability of correction trial after error
 
 
 
