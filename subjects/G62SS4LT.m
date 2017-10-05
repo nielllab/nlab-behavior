@@ -1,12 +1,15 @@
 
 %%% subject information
-subj.name = 'G62AAA4TT';
-subj.dataLocation = 'c:\balldata\G62AAA4TT\';
+subj.name = 'G62SS4LT';
+subj.dataLocation = 'c:\balldataG62SS4LT\';
 subj.taskFile = 'FullFlankerTask';
+
+%%% monitor position
+subj.monitorPosition = 'landscape'
 
 %%% stopping
 subj.stopDuration=1;
-subj.stopThresh=60; %%% movement criterion to be considered stopped
+subj.stopThresh=60;
 subj.stopReward=0; %%% duration
 
 %%% response

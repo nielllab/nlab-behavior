@@ -2,7 +2,10 @@
 %%% subject information
 subj.name = 'G62PP9LT';
 subj.dataLocation = 'c:\balldata\G62PP9LTT\';
-subj.taskFile = 'BasicFlankerTask';
+subj.taskFile = 'HvV_center_task';
+
+%%% monitor position
+subj.monitorPosition = 'portriart'
 
 %%% stopping
 subj.stopDuration=1;

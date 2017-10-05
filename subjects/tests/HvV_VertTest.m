@@ -1,8 +1,11 @@
 
 %%% subject information
-subj.name = 'G62SS4LT';
-subj.dataLocation = 'c:\balldata\G62SS4LT\';
-subj.taskFile = 'FullFlankerTask';
+subj.name = 'the_dude';
+subj.dataLocation = 'c:\balldatathe_dude\';
+subj.taskFile = 'HvV_center_vert_task';
+
+%%% monitor position
+subj.monitorPosition = 'landscape'
 
 %%% stopping
 subj.stopDuration=1;

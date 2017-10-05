@@ -2,10 +2,10 @@
 %%% subject information
 subj.name = 'G62AAA4TT';
 subj.dataLocation = 'c:\balldataG62AAA4TT\';
-subj.taskFile = 'HvV_center_task_vert';
+subj.taskFile = 'FullFlankerTask';
 
 %%% monitor position
-%subj.monitorPosition = landscape
+subj.monitorPosition = 'landscape'
 
 %%% stopping
 subj.stopDuration=1;

@@ -1,11 +1,11 @@
 
 %%% subject information
-subj.name = 'G62AA11RT';
-subj.dataLocation = 'c:\balldata\G62AA11RT\';
+subj.name = 'the_dude';
+subj.dataLocation = 'c:\balldatathe_dude\';
 subj.taskFile = 'HvV_center_task';
 
 %%% monitor position
-subj.monitorPosition = 'portriart'
+subj.monitorPosition = 'landscape'
 
 %%% stopping
 subj.stopDuration=1;

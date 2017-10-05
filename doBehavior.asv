@@ -54,14 +54,14 @@ while ~done
     end
     
     %%% do stopping period
-    [stopDetails trigT] = doStopping(interImg,framerate,subj,win,pp,label,pin,trigT);
+    stopDetails = doStopping(interImg,framerate,subj,win,pp,label,pin,trigT);
     if stopDetails.quit
         done =1;
         break
     end
     allStop(trial) = stopDetails;
     %%% do stimulus/response
-    [respDetails trigT] = doStimPeriod(stimulus(:,:,trialCond(trial)),stimDetails(trialCond(trial)),framerate,subj,win,pp,label,pin,trigT);
+    respDetails = doStimPeriod(stimulus(:,:,trialCond(trial)),stimDetails(trialCond(trial)),framerate,subj,win,pp,label,pin,trigT);
     if respDetails.quit
         done=1;
         break

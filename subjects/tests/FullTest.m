@@ -1,8 +1,11 @@
 
 %%% subject information
-subj.name = 'G62AAA4TT';
-subj.dataLocation = 'c:\balldata\G62AAA4TT\';
+subj.name = 'the dude';
+subj.dataLocation = 'c:\balldatathedude\';
 subj.taskFile = 'FullFlankerTask';
+
+%%% monitor position
+subj.monitorPosition = 'landscape'
 
 %%% stopping
 subj.stopDuration=1;
@@ -12,7 +15,7 @@ subj.stopReward=0; %%% duration
 %%% response
 subj.respThresh = 600;
 subj.maxStimduration = 10000;  %%%% timeout
-subj.rewardDuration=0.091;
+subj.rewardDuration=0.182;
 
 %%% post-response
 subj.correctDuration = 1;
