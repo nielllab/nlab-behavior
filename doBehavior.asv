@@ -25,10 +25,15 @@ Screen('Preference', 'SkipSyncTests', 1);
 win = Screen('OpenWindow',0,128);
 framerate = Screen('FrameRate',win);
 
+for i = 1:size(stimulus,3);
+     tex(i)=Screen('MakeTexture', win, stimulus(:,:,i)');
+end
+
 %%% loop over trials
 done = 0;
 trial =0;
 ListenChar(2);
+
 while ~done
     trial = trial+1;
     
@@ -54,14 +59,14 @@ while ~done
     end
     
     %%% do stopping period
-    stopDetails = doStopping(interImg,framerate,subj,win,pp,label,pin,trigT);
+    [stopDetails trigT] = doStopping(interImg,framerate,subj,win,pp,label,pin,trigT);
     if stopDetails.quit
         done =1;
         break
     end
     allStop(trial) = stopDetails;
     %%% do stimulus/response
-    respDetails = doStimPeriod(stimulus(:,:,trialCond(trial)),stimDetails(trialCond(trial)),framerate,subj,win,pp,label,pin,trigT);
+    [respDetails trigT] = doStimPeriod(tex(trialCond(trial)),stimDetails(trialCond(trial)),framerate,subj,win,pp,label,pin,trigT);
     if respDetails.quit
         done=1;
         break
@@ -149,3 +154,13 @@ if isfield(stimDetails,'flankContrast')
     title('correct'); set(gca,'Xtick',1:length(c));set(gca,'XTickLabel',label); xlabel('contrast'); ylim([0 1]);
     legend(tlabel);
 end
+
+figure
+plot(diff(trigT)); xlabel('frame'); ylabel('trigger interval secs'); ylim([0.05 0.15]);
+
+ft = [];
+for i = 1:length(allResp);
+    ft = [ft allStop(i).frameT allResp(i).frameT];
+end
+figure
+plot(diff(ft)); ylim([0 0.05]); ylabel('video frame interval'); 
