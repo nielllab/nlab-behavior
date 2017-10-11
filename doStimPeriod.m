@@ -1,4 +1,4 @@
-function [details trigT] = doStimPeriod(stimulus,stimDetails,framerate,subj,win,pp, label,pin,trigT)
+function [details trigT] = doStimPeriod(tex,stimDetails,framerate,subj,win,pp, label,pin,trigT)
 
 %%% get time and set flags
 start= GetSecs;
@@ -10,18 +10,22 @@ while ~done
     t=t+1
     if stimDetails.static ==1
         %%% display stimulus image
-        tex=Screen('MakeTexture', win, stimulus'); Screen('DrawTexture', win, tex);
+        Screen('DrawTexture', win, tex);
         Screen('DrawText',win,label,10,30);
+        pre = GetSecs;
         vbl = Screen('Flip', win);
-        Screen('Close',tex)
+        post=GetSecs;
+        details.flipT(t) = post-pre;
+        trigT= camTrig(pp,pin,trigT);
+        
     elseif stimDetails.static==0
         %%% wait and display next frame
     end
     %pco;
     details.frameT(t) = GetSecs-start;
     %%% get mouse position and reset to center
-        trigT= camTrig(pp,pin,trigT);
-        
+    
+    
     [x y] = GetMouse
     SetMouse(xcenter,ycenter);
     if t==1
@@ -65,7 +69,7 @@ while ~done
 end
 done = 0;
 
-details
+%details
 %%% post-response period - give reward and change screen?
 
 while ~done
@@ -73,12 +77,16 @@ while ~done
     %%% correct response
     if details.correct
         %%% show correct image
-        tex=Screen('MakeTexture', win, stimulus'); Screen('DrawTexture', win, tex);
+        Screen('DrawTexture', win, tex);
         Screen('DrawText',win,label,10,30);
+        pre = GetSecs;
+        vbl = Screen('Flip', win);
+        post=GetSecs;
+        details.flipT(t) = post-pre;
+        trigT= camTrig(pp,pin,trigT);
+        
         %%% close valve?
-       
-            trigT= camTrig(pp,pin,trigT);
-            
+        
         if GetSecs-openTime>=subj.rewardDuration
             setPPpin(pp,pin.valve,0);
         end
@@ -87,16 +95,16 @@ while ~done
             done=1;
         end
         
-        
-        Screen('Close',tex);
-        
         %%% incorrect response
     elseif ~details.correct
         %%% show error image
         Screen('FillRect',win,255);
         Screen('DrawText',win,label,10,30);
-        Screen('Flip',win);
-            trigT= camTrig(pp,pin,trigT);
+        pre = GetSecs;
+        vbl = Screen('Flip', win);
+        post=GetSecs;
+        details.flipT(t) = post-pre;
+        trigT= camTrig(pp,pin,trigT);
         %%% when finished
         if t-respFrame>(subj.errorDuration)*framerate
             Screen('FillRect',win,128);
@@ -121,6 +129,7 @@ while ~done
     
 end
 details.quit=0;
+details.frameT=details.frameT + start;
 %%% close valve (just in case)
 
 

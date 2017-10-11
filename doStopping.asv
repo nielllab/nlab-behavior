@@ -1,4 +1,4 @@
-function details = doStopping(stopImg,framerate, subj,win,pp,label,pin,trigT)
+function [details trigT] = doStopping(stopImg,framerate, subj,win,pp,label,pin,trigT)
 
 %%% set flags
 t= 0;       %%% current frame
@@ -36,9 +36,9 @@ while ~done
 %     end
  Screen('DrawText',win,label,10,30);
     Screen('Flip',win);
-    camTrig(pp,pin,trigT);
+    trigT= camTrig(pp,pin,trigT);
     %Screen('Close',tex)
- 
+ details.frameT=G
     %%% check whether the last "duration" frames were less than threshold
     if ~stopped&& t>subj.stopDuration*framerate && max(sqrt(details.dx(end-duration:end).^2 + details.dy(end-duration:end).^2))<subj.stopThresh
         stopped=1;
@@ -69,6 +69,6 @@ while ~done
 end
 
 details.stopTime= stopTime/framerate;
-
+details.start =start;
 details.quit = 0;
 

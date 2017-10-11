@@ -1,4 +1,4 @@
-function details = doStimPeriod(stimulus,stimDetails,framerate,subj,win,pp, label,pin)
+function [details trigT] = doStimPeriod(stimulus,stimDetails,framerate,subj,win,pp, label,pin,trigT)
 
 %%% get time and set flags
 start= GetSecs;
@@ -13,6 +13,7 @@ while ~done
         tex=Screen('MakeTexture', win, stimulus'); Screen('DrawTexture', win, tex);
         Screen('DrawText',win,label,10,30);
         vbl = Screen('Flip', win);
+        trigT= camTrig(pp,pin,trigT);
         Screen('Close',tex)
     elseif stimDetails.static==0
         %%% wait and display next frame
@@ -20,6 +21,7 @@ while ~done
     %pco;
     details.frameT(t) = GetSecs-start;
     %%% get mouse position and reset to center
+    
     
     [x y] = GetMouse
     SetMouse(xcenter,ycenter);
@@ -74,7 +76,10 @@ while ~done
         %%% show correct image
         tex=Screen('MakeTexture', win, stimulus'); Screen('DrawTexture', win, tex);
         Screen('DrawText',win,label,10,30);
+        vbl = Screen('Flip', win);
+        trigT= camTrig(pp,pin,trigT);
         %%% close valve?
+     
         if GetSecs-openTime>=subj.rewardDuration
             setPPpin(pp,pin.valve,0);
         end
@@ -92,6 +97,7 @@ while ~done
         Screen('FillRect',win,255);
         Screen('DrawText',win,label,10,30);
         Screen('Flip',win);
+        trigT= camTrig(pp,pin,trigT);
         %%% when finished
         if t-respFrame>(subj.errorDuration)*framerate
             Screen('FillRect',win,128);
