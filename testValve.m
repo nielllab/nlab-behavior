@@ -1,5 +1,5 @@
 display('type q to quit')
-d =input('open duration : ');
+d =input('open duration secs : ');
 w =input('wait duration : ');
 n= input('number : ');
 
