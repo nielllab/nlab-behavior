@@ -5,7 +5,7 @@ subj.dataLocation = 'c:\balldata\G62AA11RT\';
 subj.taskFile = 'HvV_center_task';
 
 %%% monitor position
-subj.monitorPosition = 'portriart'
+subj.monitorPosition = 'portrait'
 
 %%% stopping
 subj.stopDuration=1;
