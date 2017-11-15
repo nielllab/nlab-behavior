@@ -2,7 +2,7 @@
 %%% subject information
 subj.name = 'G62AAA4TT';
 subj.dataLocation = 'c:\balldataG62AAA4TT\';
-subj.taskFile = 'FullFlankerTask';
+subj.taskFile = 'HvV_center_task';
 
 %%% monitor position
 subj.monitorPosition = 'landscape'
@@ -15,7 +15,7 @@ subj.stopReward=0; %%% duration
 %%% response
 subj.respThresh = 600;
 subj.maxStimduration = 10000;  %%%% timeout
-subj.rewardDuration=0.091;
+subj.rewardDuration=0.150;
 
 %%% post-response
 subj.correctDuration = 1;

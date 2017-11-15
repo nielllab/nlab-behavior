@@ -15,7 +15,7 @@ subj.stopReward=0; %%% duration
 %%% response
 subj.respThresh = 600;
 subj.maxStimduration = 10000;  %%%% timeout
-subj.rewardDuration=0.091;
+subj.rewardDuration=0.122;
 
 %%% post-response
 subj.correctDuration = 1;
