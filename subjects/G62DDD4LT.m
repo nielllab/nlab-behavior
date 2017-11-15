@@ -1,7 +1,7 @@
 
 %%% subject information
-subj.name = 'G62AAA4TT';
-subj.dataLocation = 'c:\balldataG62AAA4TT\';
+subj.name = 'G6DDD4LT';
+subj.dataLocation = 'c:\balldataG6H42LT\';
 subj.taskFile = 'HvV_center_task';
 
 %%% monitor position
@@ -10,12 +10,12 @@ subj.monitorPosition = 'landscape'
 %%% stopping
 subj.stopDuration=1;
 subj.stopThresh=60;
-subj.stopReward=0; %%% duration
+subj.stopReward=0.25; %%% duration
 
 %%% response
 subj.respThresh = 600;
 subj.maxStimduration = 10000;  %%%% timeout
-subj.rewardDuration=0.107;
+subj.rewardDuration=0.5;
 
 %%% post-response
 subj.correctDuration = 1;
