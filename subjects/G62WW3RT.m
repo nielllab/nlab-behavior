@@ -2,7 +2,7 @@
 %%% subject information
 subj.name = 'G62WW3RT';
 subj.dataLocation = 'c:\balldataG62WW3RT\';
-subj.taskFile = 'FullFlankerTask';
+subj.taskFile = 'HvV_center_task';
 
 %%% monitor position
 subj.monitorPosition = 'landscape'

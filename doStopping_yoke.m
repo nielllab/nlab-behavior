@@ -1,4 +1,4 @@
-function [details trigT] = doStopping(stopImg,framerate, subj,win,pp,label,pin,trigT)
+function [details trigT] = doStopping(stopImg,framerate, subj,win,pp,label,pin,trigT, meanStop)
 
 %%% set flags
 t= 0;       %%% current frame
@@ -11,15 +11,11 @@ pinDefs; %%% read in pin definitions
 xcenter = 1920/2; ycenter = 1080/2;
 
 start = GetSecs
-duration = subj.stopDuration*framerate;
-
-
-
 
 while ~done
     t=t+1;
-   
-       %%% read and reset mouse
+    
+    %%% read and reset mouse
     [x y] = GetMouse;
     SetMouse(xcenter,ycenter);
     details.dx(t) = x-xcenter;
@@ -27,20 +23,20 @@ while ~done
     d(t) = sqrt(details.dx(t)^2 + details.dy(t)^2);
     
     %%% set up screen with stopping image (dependent on movement
-%     tex=Screen('MakeTexture', win, stopImg);
-%     Screen('DrawTexture', win, tex);
-%     if d(t)<subj.stopThresh
-%         Screen('DrawText',win,sprintf('stop'),10,30);
-%     else
-%         Screen('DrawText',win,sprintf('move'),10,30);
-%     end
- Screen('DrawText',win,label,10,30);
+    %     tex=Screen('MakeTexture', win, stopImg);
+    %     Screen('DrawTexture', win, tex);
+    %     if d(t)<subj.stopThresh
+    %         Screen('DrawText',win,sprintf('stop'),10,30);
+    %     else
+    %         Screen('DrawText',win,sprintf('move'),10,30);
+    %     end
+    Screen('DrawText',win,label,10,30);
     Screen('Flip',win);
     trigT= camTrig(pp,pin,trigT);
     %Screen('Close',tex)
- details.frameT=G
+    details.frameT(t)=GetSecs;
     %%% check whether the last "duration" frames were less than threshold
-    if ~stopped&& t>subj.stopDuration*framerate && max(sqrt(details.dx(end-duration:end).^2 + details.dy(end-duration:end).^2))<subj.stopThresh
+    if ~stopped&& rand<(1/(meanStop*60))
         stopped=1;
         stopTime=t;
         details.stopSecs = GetSecs-start;
@@ -61,7 +57,7 @@ while ~done
         t
         done=1;
     end
-        c=keyboardCommand(win,pp);
+    c=keyboardCommand(win,pp);
     if strcmp(c,'q')
         details.quit=1;
         return

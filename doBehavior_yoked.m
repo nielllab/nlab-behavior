@@ -11,7 +11,7 @@ run(fullfile(p,f));
 load(subj.taskFile);
 
 %%% save out session information
-sessionfile = [subj.dataLocation datestr(now,30) '_' num2str(sessions)];
+sessionfile = [subj.dataLocation '\' datestr(now,30) '_' num2str(sessions)];
 fileList{sessions} = sessionfile;
 save(subj.subjFile,'fileList','-append')
 save(sessionfile,'sessions','subj','stimDetails');
@@ -52,21 +52,21 @@ while ~done
         correct = field2array(allResp,'correct');
         bias = field2array(allResp,'response')>0;
         if trial>50
-            running = mean(correct(end-49:end));
+            running = mean(correct(end-49:end)); 
             else running = NaN;
         end
         label = sprintf('  N= %d c = %0.2f cr = %0.2f b = %0.2f',trial,mean(correct), running,mean(bias));
     end
     
     %%% do stopping period
-    [stopDetails trigT] = doStopping(interImg,framerate,subj,win,pp,label,pin,trigT);
+    [stopDetails trigT] = doStopping_yoke(interImg,framerate,subj,win,pp,label,pin,trigT, subj.meanStop);
     if stopDetails.quit
         done =1;
         break
     end
     allStop(trial) = stopDetails;
     %%% do stimulus/response
-    [respDetails trigT] = doStimPeriod(tex(trialCond(trial)),stimDetails(trialCond(trial)),framerate,subj,win,pp,label,pin,trigT);
+    [respDetails trigT] = doStimPeriod_yoke(tex(trialCond(trial)),stimDetails(trialCond(trial)),framerate,subj,win,pp,label,pin,trigT, subj.meanResp);
     if respDetails.quit
         done=1;
         break
@@ -93,11 +93,11 @@ plot(conv(correct, ones(1,10),'valid')/10,'g'); hold on
 plot(conv(double(bias), ones(1,10),'valid')/10,'r'); legend('correct','bias'); ylim([0 1])
 
 subplot(2,2,3);
-plot(log10(field2array(allStop,'stopSecs')),'.'); title('stop time')
+plot(log10(field2array(allStop,'stopSecs')),'.'); title('stop time log10')
 
 subplot(2,2,4);
 r= field2array(allResp,'respTime');
-plot(log10(r),'.'); title('response time'); ylim([-1 1.1*max(log10(r))])
+plot(log10(r),'.'); title('response time log10'); ylim([-1 1.1*max(log10(r))])
 saveas(gcf,[sessionfile '_fig'],'jpg')
 
 clear label flankResp flankBias biasLower biasUpper respLower respUpper
