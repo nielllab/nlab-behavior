@@ -1,7 +1,4 @@
 clear all
-%%% to do
-
-%%% save out results, and basic plots
 
 %%% execute subject file to get parameters
 [ f p] = uigetfile('*.m','subject file');
@@ -55,7 +52,8 @@ while ~done
             running = mean(correct(end-49:end));
             else running = NaN;
         end
-        label = sprintf('  N= %d c = %0.2f cr = %0.2f b = %0.2f',trial,mean(correct), running,mean(bias));
+        afterCorrect = find(correct)+1; afterCorrect= afterCorrect(afterCorrect<=length(correct));
+        label = sprintf('  N= %d c = %0.2f cr = %0.2f b = %0.2f ac = %0.2f',trial,mean(correct), running,mean(bias),mean(correct(afterCorrect)));
     end
     
     %%% do stopping period
