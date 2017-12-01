@@ -15,12 +15,14 @@ subj.stopReward=0; %%% duration
 %%% response
 subj.respThresh = 600;
 subj.maxStimduration = 10000;  %%%% timeout
-subj.rewardDuration=0.107;
+subj.rewardDuration=0.150;
 
 %%% post-response
 subj.correctDuration = 1;
 subj.errorDuration = 1;
 subj.correctionProb = 0.5;  %%% probability of correction trial after error
+
+
 
 %%% set up files
 
