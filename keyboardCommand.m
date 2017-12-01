@@ -1,13 +1,14 @@
-function c = keyboardCommand(win,pp)
+function c = keyboardCommand(win,pp,pin)
 %%% check keyboard and take appropriate action
-if CharAvail;
-    c = GetChar;
+[ keyIsDown, seconds, keyCode ] = KbCheck
+if keyIsDown;
+    c = KbName(keyCode);
     if strcmp(c,'o')
           Screen('DrawText',win,sprintf('water'),100,300);
           Screen('Flip',win);
-          setPP(pp,255);
+          setPPpin(pp,pin.valve,1);
           WaitSecs(0.5)
-          setPP(pp,0);
+           setPPpin(pp,pin.valve,0);
     end
 else
     c = '';

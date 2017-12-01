@@ -1,4 +1,4 @@
-function [details trigT] = doStopping(stopImg,framerate, subj,win,pp,label,pin,trigT)
+function [details trigT] = doStopping(stopImg,framerate, subj,win,pp,label,pin,trigT, meanStop)
 
 %%% set flags
 t= 0;       %%% current frame
@@ -11,10 +11,6 @@ pinDefs; %%% read in pin definitions
 xcenter = 1920/2; ycenter = 1080/2;
 
 start = GetSecs
-duration = subj.stopDuration*framerate;
-
-
-
 
 while ~done
     t=t+1;
@@ -40,7 +36,7 @@ while ~done
     %Screen('Close',tex)
     details.frameT(t)=GetSecs;
     %%% check whether the last "duration" frames were less than threshold
-    if ~stopped&& t>subj.stopDuration*framerate && max(sqrt(details.dx(end-duration:end).^2 + details.dy(end-duration:end).^2))<subj.stopThresh
+    if ~stopped&& rand<(1/(meanStop*60))
         stopped=1;
         stopTime=t;
         details.stopSecs = GetSecs-start;

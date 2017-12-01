@@ -1,23 +1,26 @@
 
 %%% subject information
-subj.name = 'g62b7lt';
-subj.dataLocation = 'c:\balldata\g62b7lt\';
-subj.taskFile = 'HvVtask';
+subj.name = 'the dude';
+subj.dataLocation = 'c:\balldatathedude\';
+subj.taskFile = 'FullFlankerTask';
+
+%%% monitor position
+subj.monitorPosition = 'landscape'
 
 %%% stopping
 subj.stopDuration=1;
-subj.stopThresh=100;
-subj.stopReward=0.055; %%% duration
+subj.stopThresh=60;
+subj.stopReward=0; %%% duration
 
 %%% response
-subj.respThresh = 500;
-subj.maxStimduration = 10;
-subj.rewardDuration=0.055;
+subj.respThresh = 600;
+subj.maxStimduration = 10000;  %%%% timeout
+subj.rewardDuration=0.182;
 
 %%% post-response
 subj.correctDuration = 1;
 subj.errorDuration = 1;
-subj.correctionProb = 1;  %%% probability of correction trial after error
+subj.correctionProb = 0.5;  %%% probability of correction trial after error
 
 
 

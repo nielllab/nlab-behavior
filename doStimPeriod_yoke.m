@@ -1,4 +1,4 @@
-function [details trigT] = doStimPeriod(tex,stimDetails,framerate,subj,win,pp, label,pin,trigT)
+function [details trigT] = doStimPeriod_yoke(tex,stimDetails,framerate,subj,win,pp, label,pin,trigT, meanResp)
 
 %%% get time and set flags
 start= GetSecs;
@@ -36,14 +36,14 @@ while ~done
     end
     
     %%% if position has crossed threshold, check to see if it's correct or not
-    if abs(details.xpos(t))>subj.respThresh
+    if rand<(1/(meanResp*60))
         responded =1;
         respFrame= t;
         details.timeout=1;
         details.respTime = GetSecs-start;
         details.response = sign(details.xpos(t));
         %%% correct response
-        if stimDetails.correctResp*sign(details.xpos(t))==1
+        if rand<0.5 %%% randomly rewarded
             details.correct=1;
             setPPpin(pp,pin.valve,1);
             openTime = GetSecs;

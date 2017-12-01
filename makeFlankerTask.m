@@ -9,7 +9,8 @@ phaserange = linspace(0, 2*pi,5);
 phaserange=phaserange(1:4);
 ntheta =2;
 nx = 1; ny =1;
-targContrast = [ 0.125 0.25 0.5 1];
+% targContrast = [ 0.125 0.25 0.5 1];
+targContrast = [ 0.0625 0.25 1];
 flankContrast  = [-1 -0.25 0 0.25 1];
 
 randomTheta=0;
@@ -61,9 +62,9 @@ for n= 1:length(thetarange);
     end
 end
 
-%%% set correct responses
-correctResp(theta==0) = -1;
-correctResp(theta == pi/2) =1;
+%%% set correct responses 1=left -1=right in landscape
+correctResp(theta==0) = 1;
+correctResp(theta == pi/2) = -1;
 
 %%% make circular mask
 [x y] =meshgrid(1:blockwidth,1:blockwidth);
@@ -113,6 +114,6 @@ end
 
 
 interImg = ones(xsz,ysz)*128;
-save FullFlankerTask_vert interImg stimulus stimDetails xpos ypos correctResp sf phase theta nx ny targC flankC
+save FullFlankerTask interImg stimulus stimDetails xpos ypos correctResp sf phase theta nx ny targC flankC
 
 

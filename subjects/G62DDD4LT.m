@@ -1,8 +1,8 @@
 
 %%% subject information
-subj.name = 'G62SS4LT';
-subj.dataLocation = 'c:\balldataG62SS4LT\';
-subj.taskFile = 'FullFlankerTask';
+subj.name = 'G62DDD4LT';
+subj.dataLocation = 'c:\balldataG62DDD4LT\';
+subj.taskFile = 'HvV_center_task';
 
 %%% monitor position
 subj.monitorPosition = 'landscape'
@@ -15,12 +15,12 @@ subj.stopReward=0; %%% duration
 %%% response
 subj.respThresh = 600;
 subj.maxStimduration = 10000;  %%%% timeout
-subj.rewardDuration=0.122;
+subj.rewardDuration=0.5;
 
 %%% post-response
 subj.correctDuration = 1;
 subj.errorDuration = 1;
-subj.correctionProb = 0.5;  %%% probability of correction trial after error
+subj.correctionProb = 0.75;  %%% probability of correction trial after error
 
 
 
