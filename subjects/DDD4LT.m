@@ -1,6 +1,6 @@
 %%% subject information
 subj.name = 'DDD4LT';
-subj.dataLocation = 'c:\balldata_DDD4LT\';
+subj.dataLocation = 'c:\balldata\DDD4LT\';
 subj.taskFile = 'FullFlankerTask';
 
 %%% monitor position
