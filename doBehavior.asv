@@ -143,7 +143,6 @@ if isfield(stimDetails,'flankContrast')
     end
     title('bias'); set(gca,'Xtick',1:length(c));set(gca,'XTickLabel',label); xlabel('contrast'); ylim([0 1]);
     legend(tlabel);
-    saveas(gcf,[sessionfile '_bias_fig'],'jpg')
     
     col = 'rgbcmy';
     figure
@@ -152,10 +151,9 @@ if isfield(stimDetails,'flankContrast')
     end
     title('correct'); set(gca,'Xtick',1:length(c));set(gca,'XTickLabel',label); xlabel('contrast'); ylim([0 1]);
     legend(tlabel);
-     saveas(gcf,[sessionfile '_correct_fig'],'jpg')
 end
 
-
+saveas(gcf,[sessionfile '_fig'],'jpg')
 
 figure
 plot(diff(trigT)); xlabel('frame'); ylabel('trigger interval secs'); ylim([0.05 0.15]);
