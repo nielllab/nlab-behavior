@@ -1,6 +1,6 @@
 function c = keyboardCommand(win,pp,pin)
 %%% check keyboard and take appropriate action
-[ keyIsDown, seconds, keyCode ] = KbCheck
+[ keyIsDown, seconds, keyCode ] = KbCheck;
 if keyIsDown;
     c = KbName(keyCode);
     if strcmp(c,'o')

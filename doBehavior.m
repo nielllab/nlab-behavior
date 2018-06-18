@@ -23,7 +23,7 @@ win = Screen('OpenWindow',0,128);
 framerate = Screen('FrameRate',win);
 
 for i = 1:size(stimulus,3);
-     tex(i)=Screen('MakeTexture', win, stimulus(:,:,i)');
+    tex(i)=Screen('MakeTexture', win, stimulus(:,:,i)');
 end
 
 %%% loop over trials
@@ -50,7 +50,7 @@ while ~done
         bias = field2array(allResp,'response')>0;
         if trial>50
             running = mean(correct(end-49:end));
-            else running = NaN;
+        else running = NaN;
         end
         afterCorrect = find(correct)+1; afterCorrect= afterCorrect(afterCorrect<=length(correct));
         label = sprintf('  N= %d c = %0.2f cr = %0.2f b = %0.2f ac = %0.2f',trial,mean(correct), running,mean(bias),mean(correct(afterCorrect)));
@@ -59,6 +59,8 @@ while ~done
     %%% do stopping period
     [stopDetails trigT] = doStopping(interImg,framerate,subj,win,pp,label,pin,trigT);
     if stopDetails.quit
+        setPPpin(pp,pin.opto,0);
+        setPPpin(pp,pin.valve,0);
         done =1;
         break
     end
@@ -66,6 +68,8 @@ while ~done
     %%% do stimulus/response
     [respDetails trigT] = doStimPeriod(tex(trialCond(trial)),stimDetails(trialCond(trial)),framerate,subj,win,pp,label,pin,trigT);
     if respDetails.quit
+        setPPpin(pp,pin.opto,0);
+        setPPpin(pp,pin.valve,0);
         done=1;
         break
     end
@@ -104,15 +108,15 @@ if isfield(stimDetails,'flankContrast')
     flankC = field2array(stimDetails(trialCond),'flankContrast');
     c = unique(flankC);
     for i = 1: length(c)
-       label{i} = num2str(c(i));
-       use = flankC==c(i);       
-      [mn ci] = binofit( sum(correct(use)),sum(use));
-      flankResp(i) = mn; respLower(i) = mn-ci(1); respUpper(i) = ci(2)-mn;
-         [mn ci] = binofit(sum(bias(use)),sum(use));
-      flankBias(i) = mn; biasLower(i) = mn-ci(1); biasUpper(i) = ci(2)-mn;
+        label{i} = num2str(c(i));
+        use = flankC==c(i);
+        [mn ci] = binofit( sum(correct(use)),sum(use));
+        flankResp(i) = mn; respLower(i) = mn-ci(1); respUpper(i) = ci(2)-mn;
+        [mn ci] = binofit(sum(bias(use)),sum(use));
+        flankBias(i) = mn; biasLower(i) = mn-ci(1); biasUpper(i) = ci(2)-mn;
     end
     figure
-     errorbar((1:length(c))+0.1,flankBias,biasLower,biasUpper,'r-o');hold on; 
+    errorbar((1:length(c))+0.1,flankBias,biasLower,biasUpper,'r-o');hold on;
     errorbar((1:length(c))-0.1,flankResp,respLower,respUpper,'b-o'); ylim([0 1])
     set(gca,'Xtick',1:length(c));set(gca,'XTickLabel',label); xlabel('contrast')
 end
@@ -152,7 +156,7 @@ if isfield(stimDetails,'flankContrast')
     end
     title('correct'); set(gca,'Xtick',1:length(c));set(gca,'XTickLabel',label); xlabel('contrast'); ylim([0 1]);
     legend(tlabel);
-     saveas(gcf,[sessionfile '_correct_fig'],'jpg')
+    saveas(gcf,[sessionfile '_correct_fig'],'jpg')
 end
 
 
@@ -165,4 +169,4 @@ for i = 1:length(allResp);
     ft = [ft allStop(i).frameT allResp(i).frameT];
 end
 figure
-plot(diff(ft)); ylim([0 0.05]); ylabel('video frame interval'); 
+plot(diff(ft)); ylim([0 0.05]); ylabel('video frame interval');

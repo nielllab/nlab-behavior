@@ -6,6 +6,16 @@ done = 0;
 t=0; %%% number of frames
 
 xcenter = 1920/2; ycenter = 1080/2;
+
+rng('shuffle');
+if isfield(subj,'optoProb') && rand<subj.optoProb
+    setPPpin(pp,pin.opto,1);
+    details.optoOn =1;
+else
+    setPPpin(pp,pin.opto,0);
+    details.optoOn=0;
+end
+
 while ~done
     t=t+1
     if stimDetails.static ==1
@@ -17,6 +27,7 @@ while ~done
         post=GetSecs;
         details.flipT(t) = post-pre;
         trigT= camTrig(pp,pin,trigT);
+
         
     elseif stimDetails.static==0
         %%% wait and display next frame
@@ -50,6 +61,9 @@ while ~done
         else
             details.correct=0;
         end
+        
+        setPPpin(pp,pin.opto,0);
+        
         done=1;
     end
     %%% check for timeout
