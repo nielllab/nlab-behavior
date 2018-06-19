@@ -13,6 +13,7 @@ subj.stopThresh=60;
 subj.stopReward=0; %%% duration
 
 subj.optoProb = 0.5;  %%% prob of turning on opto stim
+subj.optoMax=10; %%% max duration of opto stim
 
 %%% response
 subj.respThresh = 600;

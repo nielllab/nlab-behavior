@@ -66,6 +66,11 @@ while ~done
         
         done=1;
     end
+    
+    %%% check for opto timeout
+    if isfield(subj,'optoMax') && GetSecs-start>subj.optoMax
+        setPPpin(pp,pin.opto,0);
+    end
     %%% check for timeout
     if GetSecs-start>subj.maxStimduration
         done=1;
