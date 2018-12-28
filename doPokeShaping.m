@@ -62,15 +62,23 @@ blim = ones(size(stimdata,1),size(stimdata,2))*256; %black for flash
 
 f1 = figure('units','normalized','outerposition',[0 0 1 1])
 imshow(blankim)
+trtype=0; %start w/right poke rewarded
 
 while ~done
     
     trial = trial + 1;
     disp(sprintf('trial %d',trial))
-    tic
     
     figure(f1)
     imshow(blankim)
+    
+    if trtype
+        img = stimdata(:,:,1);
+        figure(f1);imshow(img)
+    else
+        img = stimdata(:,:,2);
+        figure(f1);imshow(img)
+    end
     
     tic
     trdone = 0;
@@ -80,9 +88,7 @@ while ~done
         
         if chan4==0 & chan5==0 %no pokes
             continue
-        elseif chan4==1 %left poke
-            img = stimdata(:,:,1);
-            figure(f1);imshow(img)
+        elseif chan4==1 && trtype %left poke
             channel = 0;
             voltage = 3.0;
             binary = 0;
@@ -91,9 +97,7 @@ while ~done
             voltage=0;
             ljudObj.eDAC(ljhandle, channel, voltage, binary, 0, 0);
             trdone = 1;b=toc;trtype=0;
-        elseif chan5==1 %right poke
-            img = stimdata(:,:,2);
-            figure(f1);imshow(img)
+        elseif chan5==1 && ~trtype %right poke
             channel = 1;
             voltage = 3.0;
             binary = 0;
@@ -104,30 +108,22 @@ while ~done
             trdone = 1;b=toc;trtype=1;
         end
     end
-    pause(3)
+    pause(2)
     imshow(blankim)
+    pause(2)
     
     trialCond(trial) = trtype;
-    itint(trial) = a;
     trdur(trial) = b;
-    disp(sprintf('%0.1fsec to initiate, %0.1fsec to respond',...
-        a,b))
+    disp(sprintf('%0.1fsec to respond',...
+        b))
         
-    save(sessionfile,'trialCond','itint','trdur','-append');
+    save(sessionfile,'trialCond','trdur','-append');
 end
 
 %% plot preliminary results (manually run this after ctl+c exit of behavior
 ntrials = 1:length(trialCond);
 
 figure
-
-subplot(1,2,1)
-plot(ntrials,itint,'ko')
-xlabel('trial #')
-ylabel('intertrial interval (s)')
-axis([0 length(ntrials) 0 10])
-
-subplot(1,2,2)
 plot(ntrials,trdur,'ko')
 xlabel('trial #')
 ylabel('trial duration (s)')
