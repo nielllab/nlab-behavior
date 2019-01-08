@@ -122,6 +122,7 @@ while ~done
                 imshow(blim)
             end
             imshow(blankim)
+            pause(5)
         end
     end
     trialCond(trial) = trtype;
@@ -155,13 +156,13 @@ subplot(2,2,2)
 plot(ntrials,itint,'ko')
 xlabel('trial #')
 ylabel('intertrial interval (s)')
-axis([0 length(ntrials) 0 10])
+axis([0 length(ntrials) 0 20])
 
 subplot(2,2,3)
 plot(ntrials,trdur,'ko')
 xlabel('trial #')
 ylabel('trial duration (s)')
-axis([0 length(ntrials) 0 10])
+axis([0 length(ntrials) 0 20])
 
 subplot(2,2,4)
 hold on
