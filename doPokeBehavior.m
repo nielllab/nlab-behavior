@@ -51,7 +51,8 @@ end
 
 trlb = {'incorrect','correct'};
 done = 0;
-trial = 0;
+trial = 0; %trial counter
+cortrial = 0; %correction trial
 blankim = ones(size(stimdata,1),size(stimdata,2))*128; %ITI screen
 whim = zeros(size(stimdata,1),size(stimdata,2)); %white for flash
 blim = ones(size(stimdata,1),size(stimdata,2))*256; %black for flash
@@ -79,7 +80,10 @@ while ~done
         end
     end
     
-    trtype = round(rand(1));
+    if cortrial==0
+        trtype = round(rand(1));
+    end
+    
     img = stimdata(:,:,trtype+1);
     figure(f1)
     imshow(img)
@@ -105,6 +109,7 @@ while ~done
             voltage=0;
             ljudObj.eDAC(ljhandle, channel, voltage, binary, 0, 0);
             trdone = 1;cor=1;b=toc;
+            cortrial = 0;
         elseif chan5==1 & corchan==5 %correct right poke
             channel = 1;
             voltage = 3.0;
@@ -114,6 +119,7 @@ while ~done
             voltage=0;
             ljudObj.eDAC(ljhandle, channel, voltage, binary, 0, 0);
             trdone = 1;cor=1;b=toc;
+            cortrial = 0;
         else %incorrect poke or no poke
             trdone = 1;cor=0;b=toc;
             figure(f1)
@@ -123,6 +129,11 @@ while ~done
             end
             imshow(blankim)
             pause(5)
+            if subj.cortrial <= rand()
+                cortrial = 1;
+            else
+                cortrial = 0;
+            end
         end
     end
     trialCond(trial) = trtype;

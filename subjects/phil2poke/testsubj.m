@@ -6,6 +6,7 @@ subj.bigsmall = 'small'; %select whether this subject is rewarded for big or sma
 subj.maxdur = 20; %max time they have to respond after stim is up
 subj.opendur0 = 0.1; %open time of Ch0 valve
 subj.opendur1 = 0.1; %open time of Ch1 valve
+subj.cortrial = 0.75; %probability of a correction trial
 
 %%% monitor position
 subj.monitorPosition = 'landscape'

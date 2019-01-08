@@ -4,8 +4,9 @@ subj.dataLocation = 'C:\Users\nlab\Documents\MATLAB\behavior';
 subj.taskFile = 'BigSmall2AFC'; %make this
 subj.bigsmall = 'big'; %select whether this subject is rewarded for big or small
 subj.maxdur = 20; %max time they have to respond after stim is up
-subj.opendur0 = 0.12; %open time of Ch0 valve
+subj.opendur0 = 0.1; %open time of Ch0 valve
 subj.opendur1 = 0.1; %open time of Ch1 valve
+subj.cortrial = 0.75; %probability of a correction trial
 
 %%% monitor position
 subj.monitorPosition = 'landscape'
