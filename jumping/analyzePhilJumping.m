@@ -5,7 +5,7 @@ clear all
 dbstop if error
 
 batchPhilJumping
-cd(pathname)
+% cd(pathname)
 
 ndist = 11; % number of potential distances to jump
 mindist = 3; % minimum jumping distance (usually 3 in) to ignore stepping
