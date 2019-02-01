@@ -134,6 +134,16 @@ trialdata(1).expt(n).viddir = '012819\012819_G6H13p4TT';
 trialdata(1).expt(n).vidtype = '.avi';
 trialdata(1).expt(n).vidnames = {'012819_G6H13p4TT'};
 
+n=n+1;
+trialdata(1).expt(n).date = '012919';
+trialdata(1).expt(n).trials = 37;
+trialdata(1).expt(n).platform = [2 1 3 3 1 2 2 3 1 2 2 2 3 3 2 1 3 1 3 3 2 3 3 2 1 1 1 2 3 1 2 2 2 1 3 3 3];
+trialdata(1).expt(n).distance = [8 6 3 7 5 7 4 9 8 6 5 10 11 9 9 10 11 11 6 8 3 10 5 9 4 7 9 11 4 3 11 5 6 8 9 4 7];
+trialdata(1).expt(n).success = [1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 1 1 1 1 1 1];
+trialdata(1).expt(n).jumptime = [];
+trialdata(1).expt(n).viddir = '012919\012919_G6H13p4TT';
+trialdata(1).expt(n).vidnames = {'012919_G6H13p4TTa','012919_G6H13p4TTb','012919_G6H13p4TTc'};
+
 %% animal #2
 trialdata(2).name = 'G6H13p4LT';
 n=0;
@@ -252,6 +262,15 @@ trialdata(2).expt(n).viddir = '012819\012819_G6H13p4LT';
 trialdata(1).expt(n).vidtype = '.avi';
 trialdata(2).expt(n).vidnames = {'012819_G6H13p4LT'};
 
+n=n+1;
+trialdata(1).expt(n).date = '012919';
+trialdata(1).expt(n).trials = 29;
+trialdata(1).expt(n).platform = [2 3 1 2 1 3 2 1 3 2 1 2 3 2 1 3 1 2 3 2 2 3 3 1 1 2 3 2 1];
+trialdata(1).expt(n).distance = [3 4 5 8 6 5 8 7 4 6 10 8 5 9 9 7 7 11 6 10 11 9 11 10 4 10 3 11 10 5 3 11];
+trialdata(1).expt(n).success = [1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 0 1 1 1 1 1 1 1];
+trialdata(1).expt(n).jumptime = [];
+trialdata(1).expt(n).viddir = '012919\012919_G6H13p4LT';
+trialdata(1).expt(n).vidnames = {'012919_G6H13p4LTa','012919_G6H13p4LTb'};
 
 %% animal #3
 trialdata(3).name = 'G6H13p4RT';
@@ -294,3 +313,12 @@ trialdata(3).expt(n).viddir = '012819\012819_G6H13p4RT';
 trialdata(1).expt(n).vidtype = '.avi';
 trialdata(3).expt(n).vidnames = {'012819_G6H13p4RT'};
 
+n=n+1;
+trialdata(1).expt(n).date = '012919';
+trialdata(1).expt(n).trials = 30;
+trialdata(1).expt(n).platform = [3 2 3 1 2 1 3 1 2 3 2 3 1 1 2 3 1 2 2 1 3 1 1 1 3 2 1 2 3 3];
+trialdata(1).expt(n).distance = [4 8 5 4 5 10 10 7 6 8 4 7 8 11 9 6 3 10 7 6 3 9 4 5 11 11 10 3 11 9];
+trialdata(1).expt(n).success = [1 1 1 1 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 1 1];
+trialdata(1).expt(n).jumptime = [];
+trialdata(1).expt(n).viddir = '012919\012919_G6H13p4RT';
+trialdata(1).expt(n).vidnames = {'012919_G6H13p4RT'};
