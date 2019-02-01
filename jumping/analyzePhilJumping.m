@@ -5,7 +5,9 @@ clear all
 dbstop if error
 
 batchPhilJumping
-cd(pathname)
+cd(datapathname)
+
+vidan = input('analyze video? 0=no, 1=yes: ');
 
 ndist = 11; % number of potential distances to jump
 mindist = 3; % minimum jumping distance (usually 3 in) to ignore stepping
@@ -101,3 +103,34 @@ try
 catch
     display('couldnt generate pdf');
 end
+
+%% analyze video
+if vidan
+    for ani = 1:numAni
+        numExpt = length(trialdata(ani).expt);
+        disp(sprintf('animal %d has %d potential video experiments to analyze',ani,numExpt))
+        fname = [trialdata(ani).name '_' trialdata(ani).expt(expt).date '.mat'];
+
+        for expt = 1:length(numExpt)
+            if isempty(trialdata(ani).expt(expt).viddir)
+                disp(sprintf('expt %d has no video, skipping...',expt))
+                continue
+            elseif exist(fullfile(outpathname,fname),'file')
+                disp(sprintf('expt %d video already analyzed, skipping...',expt))
+                continue
+            else
+                %load mat files
+                jumptime = trialdata(1).expt(n).jumptime;
+                frdur = frate*fps;%fix this
+                vidfile = fullfile(trialdata(ani).expt(expt).viddir,...
+                    [trialdata(ani).expt(expt).vidnames trialdata(ani).expt(expt).vidtype]);
+
+                for i = 1:length(jumptime)
+                    trace(:,:,i) = analyzeJumpVid(vidfile,jumptime);
+                end
+            end
+        end
+    end
+end        
+        
+    
