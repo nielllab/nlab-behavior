@@ -5,10 +5,11 @@ clear all
 dbstop if error
 
 batchPhilJumping
-cd(datapathname)
+% cd(datapathname)
 
-vidan = input('analyze video? 0=no, 1=yes: ');
+% vidan = input('analyze video? 0=no, 1=yes: ');
 
+conds = {'control','suture'};
 ndist = 11; % number of potential distances to jump
 mindist = 3; % minimum jumping distance (usually 3 in) to ignore stepping
 nplat = 3; % number of platforms used
@@ -104,78 +105,78 @@ catch
 end
 
 %% analyze video
-if vidan
-    frdur = 240; %~10sec for ~23fps
-%     FR = 24; %fps
-    for ani = 1%:numAni
-        numExpt = length(trialdata(ani).expt);
-        disp(sprintf('animal %d has %d potential video experiments to analyze',ani,numExpt))
-        for expt = 1:length(numExpt)
-            fname = [trialdata(ani).name '_' trialdata(ani).expt(expt).date '.mat'];
-            trials = trialdata(ani).expt(expt).trials;
-            trace = nan(frdur,5,2,trials); %time points by number of tracked points,x/y,trial#
-            if isempty(trialdata(ani).expt(expt).vidnames)
-                disp(sprintf('expt %d has no video, skipping...',expt))
-                continue
-%             elseif exist(fullfile(outpathname,fname),'file')
-%                 disp(sprintf('expt %d video already analyzed, skipping...',expt))
+% if vidan
+%     frdur = 240; %~10sec for ~23fps
+% %     FR = 24; %fps
+%     for ani = 1%:numAni
+%         numExpt = length(trialdata(ani).expt);
+%         disp(sprintf('animal %d has %d potential video experiments to analyze',ani,numExpt))
+%         for expt = 1:length(numExpt)
+%             fname = [trialdata(ani).name '_' trialdata(ani).expt(expt).date '.mat'];
+%             trials = trialdata(ani).expt(expt).trials;
+%             trace = nan(frdur,5,2,trials); %time points by number of tracked points,x/y,trial#
+%             if isempty(trialdata(ani).expt(expt).vidnames)
+%                 disp(sprintf('expt %d has no video, skipping...',expt))
 %                 continue
-            else
-                cnt=1;
-                nvid = length(trialdata(ani).expt(expt).vidnames);
-                for vid = 1:nvid
-                    jumptime = cell2mat(trialdata(ani).expt(expt).jumptime(vid));
-                    vidfile = cell2mat(fullfile(trialdata(ani).expt(expt).vidnames(vid)));
-                    for i = 1:length(jumptime)
-                        [Pointsx,Pointsy, FR] = analyzeJumpVid(vidfile,jumptime(i)-5,frdur); %take +-5 sec around jump
-                        trace(:,:,1,cnt) = Pointsx;
-                        trace(:,:,2,cnt) = Pointsy;
-                        cnt=cnt+1;
-                        disp(sprintf('done %d of %d vids',i,length(jumptime)))
-                    end
-                end
-            end
-            save(fname,'trace')
-        end
-    end
-end
+% %             elseif exist(fullfile(outpathname,fname),'file')
+% %                 disp(sprintf('expt %d video already analyzed, skipping...',expt))
+% %                 continue
+%             else
+%                 cnt=1;
+%                 nvid = length(trialdata(ani).expt(expt).vidnames);
+%                 for vid = 1:nvid
+%                     jumptime = cell2mat(trialdata(ani).expt(expt).jumptime(vid));
+%                     vidfile = cell2mat(fullfile(trialdata(ani).expt(expt).vidnames(vid)));
+%                     for i = 1:length(jumptime)
+%                         [Pointsx,Pointsy, FR] = analyzeJumpVid(vidfile,jumptime(i)-5,frdur); %take +-5 sec around jump
+%                         trace(:,:,1,cnt) = Pointsx;
+%                         trace(:,:,2,cnt) = Pointsy;
+%                         cnt=cnt+1;
+%                         disp(sprintf('done %d of %d vids',i,length(jumptime)))
+%                     end
+%                 end
+%             end
+%             save(fname,'trace')
+%         end
+%     end
+% end
 
         
 %% test plotting of bobs
-ani=1;expt=1;
-fname = [trialdata(ani).name '_' trialdata(ani).expt(expt).date '.mat'];
-load(fname)
-fouri = {};
-for tp = 1:size(trace,4)
-    trY = squeeze(trace(:,1,2,tp));
-    trX = squeeze(trace(:,1,1,tp));
-    figure;
-    hold on
-    plot(trY,'k-')
-    plot(trX,'b-')
-    legend({'Ynose','Xnose'})
-    tvals = round(ginput(3));
-    sig = trY(tvals(1,1):tvals(2,1));
-    jdist = tvals(2,2)-tvals(3,2)
-    close
-    
-    Fs = FR;            % Sampling frequency                    
-    T = 1/Fs;             % Sampling period       
-    L = length(sig);             % Length of signal
-    t = (0:L-1)*T;        % Time vector
-
-    n = 2^nextpow2(L);
-    Y = fft(sig,n);
-    P2 = abs(Y/L);
-    P1 = P2(1:n/2+1);
-    P1(2:end-1) = 2*P1(2:end-1);
-
-    figure
-    plot(0:(Fs/n):(Fs/2-Fs/n),P1(1:n/2))
-    xlabel('freq')
-    ylabel('power')
-    % close
-
-    fouri{tp} = P1;
-end
+% ani=1;expt=1;
+% fname = [trialdata(ani).name '_' trialdata(ani).expt(expt).date '.mat'];
+% load(fname)
+% fouri = {};
+% for tp = 1:size(trace,4)
+%     trY = squeeze(trace(:,1,2,tp));
+%     trX = squeeze(trace(:,1,1,tp));
+%     figure;
+%     hold on
+%     plot(trY,'k-')
+%     plot(trX,'b-')
+%     legend({'Ynose','Xnose'})
+%     tvals = round(ginput(3));
+%     sig = trY(tvals(1,1):tvals(2,1));
+%     jdist = tvals(2,2)-tvals(3,2)
+%     close
+%     
+%     Fs = FR;            % Sampling frequency                    
+%     T = 1/Fs;             % Sampling period       
+%     L = length(sig);             % Length of signal
+%     t = (0:L-1)*T;        % Time vector
+% 
+%     n = 2^nextpow2(L);
+%     Y = fft(sig,n);
+%     P2 = abs(Y/L);
+%     P1 = P2(1:n/2+1);
+%     P1(2:end-1) = 2*P1(2:end-1);
+% 
+%     figure
+%     plot(0:(Fs/n):(Fs/2-Fs/n),P1(1:n/2))
+%     xlabel('freq')
+%     ylabel('power')
+%     % close
+% 
+%     fouri{tp} = P1;
+% end
 
