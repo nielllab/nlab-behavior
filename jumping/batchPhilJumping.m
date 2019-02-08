@@ -4,8 +4,8 @@
 datapathname = '\\langevin\backup\Phil\Behavior\K99 prelim\';
 outpathname = '\\langevin\backup\Phil\Behavior\K99 prelim\';
 
-datapathname = 'D:\Phil_Jumping_Behavior\';
-outpathname = 'D:\Phil_Jumping_Behavior\';
+% datapathname = 'G:\Phil_Jumping_Behavior\';
+% outpathname = 'G:\Phil_Jumping_Behavior\';
 
 trialdata = {};
 
