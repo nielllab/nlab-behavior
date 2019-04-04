@@ -1,4 +1,5 @@
-function [Pointsx,Pointsy, FR] = analyzeJumpVid(vidfile,jumptime,frdur)
+function [trace] = analyzeJumpVid(vidfile,jumptime,frdur)
+% function [Pointsx,Pointsy, FR] = analyzeJumpVid(vidfile,jumptime,frdur)
 % Read in Eye Tracking Video
 TempVid = VideoReader(vidfile);
 frame=1; k=1;
@@ -53,27 +54,38 @@ end
 % end
 
 %% Make movie with points
-% clear vidfile
-% figure;
-% axis tight manual
-% ax = gca;
-% ax.NextPlot = 'replaceChildren';
-% % vidfile = VideoWriter('Jump1.mp4','MPEG-4');
+clear vidfile
+figure;
+axis tight manual
+ax = gca;
+ax.NextPlot = 'replaceChildren';
+% vidfile = VideoWriter('Jump1.mp4','MPEG-4');
 % vidfile = VideoWriter('Jump1b.avi');
-% vidfile.FrameRate = FR;
+% vidfile.FrameRate = FR/4;
 % open(vidfile);
-% for  v=1:size(Vid,3)
-%     imagesc(Vid(:,:,v)); colormap gray; hold on; axis equal off;
-%     scatter(Pointsx(v,:),Pointsy(v,:),100,'.r'); hold off; % Uncomment if to plot DLC points too
-% %     if ~any((Pointsx(v,:)<10 | Pointsy(v,:)<10)) % check points
-% %         e_t = fit_ellipse(Pointsx(v,:),Pointsy(v,:),ax);
-% %     end
+for  v=1:size(Vid,3)
+    subplot(2,1,1)
+    plot(-Pointsy(:,1),'k')
+    hold on
+    plot([v v],[0 -500],'r-')
+    hold off
+    subplot(2,1,2)
+    imagesc(Vid(:,:,v)); colormap gray; hold on; axis equal off;
+    scatter(Pointsx(v,:),Pointsy(v,:),100,'.r'); hold off; % Uncomment if to plot DLC points too
+%     if ~any((Pointsx(v,:)<10 | Pointsy(v,:)<10)) % check points
+%         e_t = fit_ellipse(Pointsx(v,:),Pointsy(v,:),ax);
+%     end
 %     title(sprintf('Frame = %d',v));
-%     drawnow limitrate;
+    drawnow limitrate;
 %     F(v) = getframe(gcf); 
 %     writeVideo(vidfile,F(v));
 %     fprintf('Frame = %d \n',v);
-% end
+end
+subplot(2,1,1)
+title('select before and after bob')
+[x,y] = ginput(2);x=round(x);y=round(y);
+trace = Pointsy(x(1):x(2));
+close
 % close(vidfile)
 
 %% make plot
@@ -90,16 +102,16 @@ end
 % Pointsy(154,1) = 223;
 % Pointsy(154,2) = 219;
 
-keyboard
-%%
-figure;plot(Pointsy(:,1),'k')
-framen = [150,164,169,178,183,195];
-for i = 1:length(framen)
-    h=figure;
-    imshow(Vid(:,:,framen(i)))
-    hold on
-    scatter(Pointsx(framen(i),1:2),Pointsy(framen(i),1:2),500,'r.')
-    saveas(h,sprintf('frame%d.png',framen(i)))
-    close
-end
-figure;plot(Pointsy(145:200,1),'k')
+% keyboard
+%% make figures for K99
+% figure;plot(Pointsy(:,1),'k')
+% framen = [150,164,169,178,183,195];
+% for i = 1:length(framen)
+%     h=figure;
+%     imshow(Vid(:,:,framen(i)))
+%     hold on
+%     scatter(Pointsx(framen(i),1:2),Pointsy(framen(i),1:2),500,'r.')
+%     saveas(h,sprintf('frame%d.png',framen(i)))
+%     close
+% end
+% figure;plot(Pointsy(145:200,1),'k')
