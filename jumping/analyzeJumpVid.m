@@ -1,4 +1,4 @@
-function [trace] = analyzeJumpVid(vidfile,jumptime,frdur)
+function [trace] = analyzeJumpVid(vidfile,jumptime,frdur,cnt)
 % function [Pointsx,Pointsy, FR] = analyzeJumpVid(vidfile,jumptime,frdur)
 % Read in Eye Tracking Video
 TempVid = VideoReader(vidfile);
@@ -54,15 +54,15 @@ end
 % end
 
 %% Make movie with points
-clear vidfile
 figure;
 axis tight manual
 ax = gca;
 ax.NextPlot = 'replaceChildren';
-% vidfile = VideoWriter('Jump1.mp4','MPEG-4');
+vname = sprintf('%s_%d.mp4',vidfile(1:end-4),cnt)
+vidfile = VideoWriter(vname,'MPEG-4');
 % vidfile = VideoWriter('Jump1b.avi');
-% vidfile.FrameRate = FR/4;
-% open(vidfile);
+vidfile.FrameRate = FR/4;
+open(vidfile);
 for  v=1:size(Vid,3)
     subplot(2,1,1)
     plot(-Pointsy(:,1),'k')
@@ -77,16 +77,16 @@ for  v=1:size(Vid,3)
 %     end
 %     title(sprintf('Frame = %d',v));
     drawnow limitrate;
-%     F(v) = getframe(gcf); 
-%     writeVideo(vidfile,F(v));
+    F(v) = getframe(gcf); 
+    writeVideo(vidfile,F(v));
 %     fprintf('Frame = %d \n',v);
 end
 subplot(2,1,1)
 title('select before and after bob')
 [x,y] = ginput(2);x=round(x);y=round(y);
-trace = Pointsy(x(1):x(2));
+trace = [Pointsy(x(1):x(2));Pointsx(x(1):x(2))];
 close
-% close(vidfile)
+close(vidfile)
 
 %% make plot
 % figure
