@@ -1,11 +1,12 @@
-function [trace] = analyzeJumpVid(vidfile,jumptime,frdur,cnt)
+function [Pointsx, Pointsy, Vid] = analyzeJumpVid(vidfile,jumptime,frdur,cnt)
 % function [Pointsx,Pointsy, FR] = analyzeJumpVid(vidfile,jumptime,frdur)
 % Read in Eye Tracking Video
 TempVid = VideoReader(vidfile);
 frame=1; k=1;
-TempVid.CurrentTime = jumptime; %subtract 5 seconds from actual jump time so you get bobs
-CT =TempVid.CurrentTime;
 FR = round(TempVid.FrameRate);
+TempVid.CurrentTime = jumptime/FR; %subtract 5 seconds from actual jump time so you get bobs
+CT =TempVid.CurrentTime;
+frdur=frdur*FR;
 for frame = 1: frdur
         Vid(:,:,k) = rgb2gray(readFrame(TempVid));
         if mod(frame,100)==0
@@ -63,7 +64,7 @@ vidfile = VideoWriter(vname,'MPEG-4');
 % vidfile = VideoWriter('Jump1b.avi');
 vidfile.FrameRate = FR/4;
 open(vidfile);
-for  v=1:size(Vid,3)
+for  v=1:3:size(Vid,3)
     subplot(2,1,1)
     plot(-Pointsy(:,1),'k')
     hold on
@@ -76,15 +77,15 @@ for  v=1:size(Vid,3)
 %         e_t = fit_ellipse(Pointsx(v,:),Pointsy(v,:),ax);
 %     end
 %     title(sprintf('Frame = %d',v));
-    drawnow limitrate;
+    drawnow% limitrate;
     F(v) = getframe(gcf); 
     writeVideo(vidfile,F(v));
 %     fprintf('Frame = %d \n',v);
 end
-subplot(2,1,1)
-title('select before and after bob')
-[x,y] = ginput(2);x=round(x);y=round(y);
-trace = [Pointsy(x(1):x(2));Pointsx(x(1):x(2))];
+% subplot(2,1,1)
+% title('select before and after bob')
+% [x,y] = ginput(2);x=round(x);y=round(y);
+% trace = [Pointsy(x(1):x(2));Pointsx(x(1):x(2))];
 close
 close(vidfile)
 

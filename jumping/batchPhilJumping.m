@@ -5,8 +5,8 @@
 % datapathname = '\\langevin\backup\Phil\Behavior\K99 prelim\';
 % outpathname = '\\langevin\backup\Phil\Behavior\K99 prelim\';
 
-datapathname = 'D:\Jumping Analysis\Jumping-Phil-2019-04-01_AVI\videos';
-outpathname = 'D:\Jumping Analysis\Jumping-Phil-2019-04-01_AVI\videos';
+datapathname = 'D:\Jumping Analysis\Jumping-Phil-2019-04-01_AVI\videos\';
+outpathname = 'D:\Jumping Analysis\Jumping-Phil-2019-04-01_AVI\videos\';
 
 trialdata = {};
 
@@ -92,16 +92,16 @@ n=0;
 %     542.2 571.3 613.8 650.2 675.2 710.7 742.1 783.7 840.3 873.1 915.8 942.8 963.6 998.1]};
 % trialdata(1).expt(n).vidnames = {'012719_G6H13p4TT.MOV'};
 
-% n=n+1;
-% trialdata(1).expt(n).date = '012819';
-% trialdata(1).expt(n).cond = 'control';
-% trialdata(1).expt(n).trials = 29;
-% trialdata(1).expt(n).platform = [2 3 1 2 1 3 1 2 1 3 2 2 1 3 2 1 3 2 3 1 2 3 1 3 2 3 1 2 1];
-% trialdata(1).expt(n).distance = [3 4 5 4 3 6 7 5 4 3 6 7 8 5 10 11 8 9 11 6 8 10 9 7 5 9 10 11 12];
-% trialdata(1).expt(n).success = [1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1];
-% trialdata(1).expt(n).jumptime = {[25 51 75 96 124 160 193 225 241 263 287 324 343 372 413 439 466,...
-%     509 555 580 609 637 673 713 755 823 882 937 1008]};
-% trialdata(1).expt(n).vidnames = {'012819_G6H13p4TT.avi'};
+n=n+1;
+trialdata(1).expt(n).date = '012819';
+trialdata(1).expt(n).cond = 'control';
+trialdata(1).expt(n).trials = 29;
+trialdata(1).expt(n).platform = [2 3 1 2 1 3 1 2 1 3 2 2 1 3 2 1 3 2 3 1 2 3 1 3 2 3 1 2 1];
+trialdata(1).expt(n).distance = [3 4 5 4 3 6 7 5 4 3 6 7 8 5 10 11 8 9 11 6 8 10 9 7 5 9 10 11 12];
+trialdata(1).expt(n).success = [1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1];
+trialdata(1).expt(n).jumptime = {[25 51 75 96 124 160 193 225 241 263 287 324 343 372 413 439 466,...
+    509 555 580 609 637 673 713 755 823 882 937 1008]};
+trialdata(1).expt(n).vidnames = {'012819_G6H13p4TT.avi'};
 
 % n=n+1;
 % trialdata(1).expt(n).date = '012919';
@@ -124,7 +124,7 @@ n=0;
 % trialdata(1).expt(n).jumptime = {[7 55 88 142 218 291 308 365 712 459 530 553 605 674 724 767 812 888 945,...
 %     991 1047 1082 1138 1290 1413 1479 1649 1986 2081 2153 2196]};
 % trialdata(1).expt(n).vidnames = {'020319_G6H13p4TT.avi'};
-% 
+
 % n=n+1;
 % trialdata(1).expt(n).date = '020619';
 % trialdata(1).expt(n).cond = 'suture';
@@ -222,7 +222,7 @@ trialdata(2).expt(n).trials = 32;
 trialdata(2).expt(n).platform = [1 3 2 3 2 1 2 1 2 3 2 1 2 2 1 3 2 1 1 3 2 3 3 1 1 3 2 2 1 3 3 2];
 trialdata(2).expt(n).distance = [3 4 5 8 6 5 8 7 4 6 10 8 5 9 9 7 7 11 6 10 11 9 11 10 4 10 3 11 10 5 3 11];
 trialdata(2).expt(n).success = [1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 0 1 1 1 0 1 1 1 1];
-trialdata(2).expt(n).jumptime = {[53,90,123,154,190,225,298,334,389,434,480,538,602,662,719,776,817,894,...
+trialdata(2).expt(n).jumptime = {[56,88,123,154,190,225,298,334,389,434,480,538,602,662,719,776,817,894,...
     939,982,1002,1059,1117,1155,1177,1218,1263,1323,1347,1387,1428,1503]};
 trialdata(2).expt(n).vidnames = {'012819_G6H13p4LT.avi'};
 
@@ -231,7 +231,7 @@ trialdata(2).expt(n).vidnames = {'012819_G6H13p4LT.avi'};
 % trialdata(2).expt(n).cond = 'control';
 % trialdata(2).expt(n).trials = 29;
 % trialdata(2).expt(n).platform = [2 3 1 2 1 3 2 1 3 2 1 2 3 2 1 3 1 2 3 2 2 3 3 1 1 2 3 2 1];
-% trialdata(2).expt(n).distance = [3 4 5 8 6 5 8 7 4 6 10 8 5 9 9 7 7 11 6 10 11 9 11 10 4 10 3 11 10 5 3 11];
+% trialdata(2).expt(n).distance = [7 5 7 4 5 11 11 9 8 8 6 9 9 5 3 7 10 9 4 6 10 6 3 4 8 3 10 11 11];
 % trialdata(2).expt(n).success = [1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 0 1 1 1 1 1 1 1];
 % trialdata(2).expt(n).jumptime = {[72,104,153,183,227,303,334,375,435,472,496,540,557,592,626,662,701,749,...
 %     800,836,901,945],[25,141,233,261,375,460,578]};
@@ -305,7 +305,7 @@ trialdata(3).expt(n).vidnames = {'012819_G6H13p4RT.avi'};
 % trialdata(3).expt(n).jumptime = {[9,81,130,159,195,251,271,307,331,366,402,435,465,501,525,579,649,...
 %     708,750,777,824,860,890,926,1001,1027,1101,1159,1229,1291]};
 % trialdata(3).expt(n).vidnames = {'012919_G6H13p4RT.avi'};
-% 
+
 % n=n+1;
 % trialdata(3).expt(n).date = '020719';
 % trialdata(3).expt(n).cond = 'suture';
