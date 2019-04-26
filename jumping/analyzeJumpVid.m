@@ -1,10 +1,10 @@
-function [Pointsx, Pointsy, Vid] = analyzeJumpVid(vidfile,jumptime,frdur,cnt)
-% function [Pointsx,Pointsy, FR] = analyzeJumpVid(vidfile,jumptime,frdur)
+function [Pointsx, Pointsy, Vid] = analyzeJumpVid(vidfile,jumptime,frdur,cnt) %for MakeJump3CamVideo
+% function [trace] = analyzeJumpVid(vidfile,jumptime,frdur,cnt); tr=1; %for MakeJumpBehaviorVideo
 % Read in Eye Tracking Video
 TempVid = VideoReader(vidfile);
 frame=1; k=1;
 FR = round(TempVid.FrameRate);
-TempVid.CurrentTime = jumptime/FR; %subtract 5 seconds from actual jump time so you get bobs
+TempVid.CurrentTime = jumptime/FR;
 CT =TempVid.CurrentTime;
 frdur=frdur*FR;
 for frame = 1: frdur
@@ -72,7 +72,7 @@ for  v=1:3:size(Vid,3)
     hold off
     subplot(2,1,2)
     imagesc(Vid(:,:,v)); colormap gray; hold on; axis equal off;
-    scatter(Pointsx(v,:),Pointsy(v,:),100,'.r'); hold off; % Uncomment if to plot DLC points too
+    scatter(Pointsx(v,1:4),Pointsy(v,1:4),100,'.r'); hold off; % Uncomment if to plot DLC points too
 %     if ~any((Pointsx(v,:)<10 | Pointsy(v,:)<10)) % check points
 %         e_t = fit_ellipse(Pointsx(v,:),Pointsy(v,:),ax);
 %     end
@@ -82,10 +82,54 @@ for  v=1:3:size(Vid,3)
     writeVideo(vidfile,F(v));
 %     fprintf('Frame = %d \n',v);
 end
-% subplot(2,1,1)
-% title('select before and after bob')
-% [x,y] = ginput(2);x=round(x);y=round(y);
-% trace = [Pointsy(x(1):x(2));Pointsx(x(1):x(2))];
+
+% st = 1;en = length(F);
+% if tr==1
+%     subplot(2,1,1)
+%     title('select before and after bob')
+%     [x,y] = ginput(2);x=round(x);y=round(y);
+%     trace = [Pointsy(x(1):x(2));Pointsx(x(1):x(2))];
+%     st = x(1);en = x(2);
+% end
+% close
+% disp('writing video')
+% figure
+% cnt=1;
+% for v = st:2:en
+%     subplot(2,2,1)
+%     pts = -Pointsx(st:en,1)/60;
+%     plot(0:en-st,pts-mean(pts),'k') %hard coded 60 pix/in
+%     hold on
+%     plot([cnt cnt],[-3 3],'r-')
+%     axis([0 length(st:en) -3 3])
+%     xlabel(sprintf('frame (%dfps)',FR))
+%     ylabel('nose x-pos (in)')
+%     axis square
+%     hold off
+%     
+%     subplot(2,2,2)
+%     pts = -Pointsy(st:en,1)/60;
+%     plot(0:en-st,pts-mean(pts),'k') %hard coded 60 pix/in
+%     hold on
+%     plot([cnt cnt],[-3 3],'r-')
+%     axis([0 length(st:en) -3 3])
+%     xlabel(sprintf('frame (%dfps)',FR))
+%     ylabel('nose y-pos (in)')
+%     axis square
+%     hold off
+%     
+%     subplot(2,2,[3 4])
+%     imagesc(Vid(:,:,v)); colormap gray; hold on; axis equal off;
+%     scatter(Pointsx(v,1:4),Pointsy(v,1:4),100,'.r'); hold off; % Uncomment if to plot DLC points too
+% %     if ~any((Pointsx(v,:)<10 | Pointsy(v,:)<10)) % check points
+% %         e_t = fit_ellipse(Pointsx(v,:),Pointsy(v,:),ax);
+% %     end
+% %     title(sprintf('Frame = %d',v));
+%     drawnow% limitrate;
+%     F(v) = getframe(gcf); 
+%     writeVideo(vidfile,F(v));
+%     cnt=cnt+2;
+% end
 close
 close(vidfile)
 
