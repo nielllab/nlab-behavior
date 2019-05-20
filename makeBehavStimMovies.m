@@ -2,13 +2,14 @@
 %%% cmn 05/19/19
 
 clear all
-load FullFlankerTask  %%% select the behavior protocol you want
+[f p] = uigetfile('*.mat','behavior protocol'); %%% select the behavior protocol you want
+load(fullfile(p,f));
 
+%%% key parameter
 reps = 3;  %%% total number of reps of all stim
-
 framerate = 60;
 duration = 1;
-isi = 0.5
+isi = 0.5;
 
 downsamp = 0.125;
 img = imresize(stimulus,downsamp); %%% make it smaller
@@ -28,4 +29,7 @@ order = Shuffle(1:length(stimDetails));
         stimInfo(n) = stimDetails(order(i));
     end
 end
+
+[f p] = uiputfile('*.mat','moviedata file');
+save(fullfile(p,f));
 
