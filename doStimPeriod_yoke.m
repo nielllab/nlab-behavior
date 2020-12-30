@@ -5,10 +5,15 @@ start= GetSecs;
 done = 0;
 t=0; %%% number of frames
 
+% add test for whether duration is a field of stimDetails
+% if so, set dur = stimDetails.duration
+% else dur = 100000
+
 xcenter = 1920/2; ycenter = 1080/2;
 while ~done
     t=t+1
-    if stimDetails.static ==1
+    if stimDetails.static ==1 
+    % if   stimDetails.static ==1 & t < dur 
         %%% display stimulus image
         Screen('DrawTexture', win, tex);
         Screen('DrawText',win,label,10,30);
@@ -17,7 +22,13 @@ while ~done
         post=GetSecs;
         details.flipT(t) = post-pre;
         trigT= camTrig(pp,pin,trigT);
-        
+    % elseif   stimDetails.static ==1 & t >= dur 
+%         Screen('FillRect',win,128);
+%         pre = GetSecs;
+%         vbl = Screen('Flip', win);
+%         post=GetSecs;
+%         details.flipT(t) = post-pre;
+%         trigT= camTrig(pp,pin,trigT);
     elseif stimDetails.static==0
         %%% wait and display next frame
     end
