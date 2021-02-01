@@ -88,7 +88,8 @@ while ~done
     %%% correct response
     if details.correct
         %%% show correct image
-        Screen('DrawTexture', win, tex);
+        %Screen('DrawTexture', win, tex) % don't present correct stim
+        Screen('FillRect',win,128);  %%%  straight to gray
         Screen('DrawText',win,label,10,30);
         pre = GetSecs;
         vbl = Screen('Flip', win);
@@ -109,7 +110,8 @@ while ~done
         %%% incorrect response
     elseif ~details.correct
         %%% show error image
-        Screen('FillRect',win,255);
+        %Screen('FillRect',win,255);
+        Screen('FillRect',win,128);  %%% no error screen  - straight to gray
         Screen('DrawText',win,label,10,30);
         pre = GetSecs;
         vbl = Screen('Flip', win);
