@@ -54,11 +54,6 @@ for i = 1:length(allResp);
     onsets(i) = allResp(i).frameT(1)-t0;
 end
 
-% remove part of movie if necessary
-%goodStart=150;
-%df(:,:,1:116)=0; %%% frames 1:116 of 102717 AAA4TT are noise
-%df(:,:,1:goodStart)=0; %% frames 1:150 of 110217WW3RT are noise
-
 %%% calculate stdev at each pixel
 stdMap = std(df(:,:,1:10:end),[],3);
 figure
@@ -87,9 +82,6 @@ for i = 1:length(onsets);
     onsetDf(:,:,:,i) = df(:,:,onsetFrame(i)-10:onsetFrame(i)+40);  %%% get frames from 10 before to 40 afterwards
 end
 
-%%% more dealing with bad trials - ignore for now
-%badtrials = onsetFrame<=goodStart;
-%sum(badtrials)
 
 %%% plot mean image at multiple timepoints pre/post stim onset
 figure

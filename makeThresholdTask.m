@@ -1,4 +1,5 @@
-%%% make movie and task variables for simplest HvV
+
+%% make movie and task variables for simplest HvV
 %%% one location, one spatial frequency, theta =0,pi/2
 
 clear all
