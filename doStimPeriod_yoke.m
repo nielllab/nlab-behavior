@@ -19,7 +19,7 @@ xcenter = 1920/2; ycenter = 1080/2;
 while ~done
     t=t+1
     %if stimDetails.static ==1 
-    if   stimDetails.static ==1 & t < dur 
+    if   stimDetails.static ==1 & t <= dur 
         %%% display stimulus image
         Screen('DrawTexture', win, tex);
         Screen('DrawText',win,label,10,30);
@@ -28,7 +28,7 @@ while ~done
         post=GetSecs;
         details.flipT(t) = post-pre;
         trigT= camTrig(pp,pin,trigT);
-    elseif   stimDetails.static ==1 & t >= dur 
+    elseif   stimDetails.static ==1 & t > dur 
         Screen('FillRect',win,128);
         pre = GetSecs;
         vbl = Screen('Flip', win);
