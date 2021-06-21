@@ -20,6 +20,9 @@ save(sessionfile,'sessions','subj','stimDetails');
 setupPP;
 pinDefs; %%% read in pin definitions
 trigT=[];
+global pinState
+pinState=0;
+
 %%% prepare screen
 Screen('Preference', 'SkipSyncTests', 1);
 win = Screen('OpenWindow',0,128);
